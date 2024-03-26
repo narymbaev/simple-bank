@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/narymbaev/simple-bank/api"
 	db "github.com/narymbaev/simple-bank/db/sqlc"
 	"github.com/narymbaev/simple-bank/util"
@@ -21,6 +22,7 @@ func main() {
 		log.Fatal("cannot connect to DB:", err)
 	}
 	store := db.NewStore(conn)
+	fmt.Printf("Address of x: %p\n", &store)
 	server := api.NewServer(store)
 
 	err = server.Start(config.ServerAddress)

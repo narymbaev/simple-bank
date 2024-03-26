@@ -1,16 +1,18 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	db "github.com/narymbaev/simple-bank/db/sqlc"
 )
 
 type Server struct {
-	store *db.Store
+	store db.Store
 	router *gin.Engine
 }
 
-func NewServer(store *db.Store) *Server {
+func NewServer(store db.Store) *Server {
+	fmt.Printf("Address of x: %p\n", &store)
 	server := &Server{store: store}
 	router := gin.Default()
 
