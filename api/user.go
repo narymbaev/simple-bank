@@ -10,10 +10,10 @@ import (
 )
 
 type createUserRequest struct {
-	Username    string `json:"username" binding:"required,alphanum"`
+	Username string `json:"username" binding:"required,alphanum"`
 	Password string `json:"password" binding:"required,min=6"`
-	FullName string `json:"full_name" binding:"required,min=6"`
-	Email string `json:"email" binding:"required,email"`
+	FullName string `json:"full_name" binding:"required"`
+	Email    string `json:"email" binding:"required,email"`
 }
 
 type createUserResponse struct {
@@ -68,6 +68,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, response)
 }
+
 //
 //type getAccountRequest struct {
 //	ID int64 `uri:"id" binding:"required,min=1"`
