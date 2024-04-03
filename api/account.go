@@ -30,7 +30,7 @@ func (server *Server) createAccount(ctx *gin.Context) {
 	if err != nil {
 		if pqErr, ok := err.(*pq.Error); ok {
 			//log.Println(pqErr.Code.Name())
-			switch pqErr.Code.Name(){
+			switch pqErr.Code.Name() {
 			case "foreign_key_violation", "unique_violation":
 				ctx.JSON(http.StatusForbidden, errorResponse(err))
 				return
@@ -68,7 +68,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 }
 
 type listAccountRequests struct {
-	PageID int32 `form:"page_id" binding:"required,min=1"`
+	PageID   int32 `form:"page_id" binding:"required,min=1"`
 	PageSize int32 `form:"page_size" binding:"required,min=5,max=10"`
 }
 
@@ -82,7 +82,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 
 	arg := db.ListAccountsParams{
 		Limit:  req.PageSize,
-		Offset: req.PageSize * (req.PageID-1),
+		Offset: req.PageSize * (req.PageID - 1),
 	}
 
 	accounts, err := server.store.ListAccounts(ctx, arg)
@@ -93,7 +93,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 
 	res := map[string]any{
 		"accounts": accounts,
-		"total": len(accounts),
+		"total":    len(accounts),
 	}
 
 	ctx.JSON(http.StatusOK, res)

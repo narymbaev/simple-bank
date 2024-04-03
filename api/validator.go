@@ -11,5 +11,3 @@ var validCurrency validator.Func = func(fl validator.FieldLevel) bool {
 	}
 	return false
 }
-
-

@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-
 func TestPasetoMaker(t *testing.T) {
 	maker, err := NewPasetoMaker(util.RandomString(32))
 	require.NoError(t, err)

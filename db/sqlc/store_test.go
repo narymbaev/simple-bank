@@ -25,7 +25,7 @@ func TestTransferTx(t *testing.T) {
 		fromAccount := account1.ID
 		toAccount := account2.ID
 
-		if i % 2 == 1 {
+		if i%2 == 1 {
 			fromAccount = account2.ID
 			toAccount = account1.ID
 		}
@@ -116,6 +116,5 @@ func TestTransferTx(t *testing.T) {
 
 	require.Equal(t, account1.Balance, updatedAccount1.Balance)
 	require.Equal(t, account2.Balance, updatedAccount2.Balance)
-
 
 }
