@@ -12,7 +12,6 @@ import (
 	"github.com/narymbaev/simple-bank/util"
 	"github.com/stretchr/testify/require"
 	"io"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -178,7 +177,6 @@ func TestCreateUserAPI(t *testing.T) {
 			recorder := httptest.NewRecorder()
 
 			data, err := json.Marshal(tc.body)
-			log.Println("Data:", string(data))
 			require.NoError(t, err)
 
 			url := "/users"
