@@ -7,7 +7,6 @@ import (
 	"github.com/lib/pq"
 	db "github.com/narymbaev/simple-bank/db/sqlc"
 	"github.com/narymbaev/simple-bank/token"
-	"log"
 	"net/http"
 )
 
@@ -59,7 +58,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 	}
 
 	account, err := server.store.GetAccount(ctx, req.ID)
-	log.Println("The ACCOUNT :", account)
+
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
@@ -70,7 +69,6 @@ func (server *Server) getAccount(ctx *gin.Context) {
 	}
 
 	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.PASETOPayload)
-	log.Println("The ACCOUNT :", account, " THE PAYLOAD USERNAME:", authPayload.Username)
 
 	if account.Owner != authPayload.Username {
 		err := errors.New("account does not belong the the authenticated user")
