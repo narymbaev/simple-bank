@@ -84,6 +84,11 @@ type listAccountRequests struct {
 	PageSize int32 `form:"page_size" binding:"required,min=5,max=10"`
 }
 
+type listAccountResponse struct {
+	Accounts []db.Account `json:"accounts"`
+	Total    int          `json:"total"`
+}
+
 func (server *Server) listAccount(ctx *gin.Context) {
 	var req listAccountRequests
 
@@ -95,7 +100,7 @@ func (server *Server) listAccount(ctx *gin.Context) {
 	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.PASETOPayload)
 
 	arg := db.ListAccountsParams{
-		Owner: authPayload.Username,
+		Owner:  authPayload.Username,
 		Limit:  req.PageSize,
 		Offset: req.PageSize * (req.PageID - 1),
 	}
@@ -106,9 +111,9 @@ func (server *Server) listAccount(ctx *gin.Context) {
 		return
 	}
 
-	res := map[string]any{
-		"accounts": accounts,
-		"total":    len(accounts),
+	res := listAccountResponse{
+		Accounts: accounts,
+		Total:    len(accounts),
 	}
 
 	ctx.JSON(http.StatusOK, res)

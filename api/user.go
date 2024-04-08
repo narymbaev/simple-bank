@@ -118,6 +118,8 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		User:        newResponse(user),
 	}
 
+	// Set Cookie Token value
+	ctx.SetCookie("token", accessToken, 60*60*24*360, "", "localhost", false, false)
 	ctx.JSON(http.StatusOK, response)
 }
 
