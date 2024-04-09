@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=bank
+    ports:
+      - "5432:5432"
+  api:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+#      - GIN_MODE=release
+      - DB_SOURCE=postgresql://root:root@db:5432/bank?sslmode=disable
+    depends_on:
+      - "db"
+    entrypoint: ["/app/wait-for.sh", "db:5432", "--", "/app/start.sh"]
+    command: ["/app/main"]
